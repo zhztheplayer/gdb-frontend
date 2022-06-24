@@ -335,9 +335,10 @@ try:
             tmux_executable +
             " -f \"" + path + "/tmux.conf\" new-session -s " + terminal_id +
             " -d '" + gdb_executable +
-            " " + gdb_args +
             " -ex \"python import sys, os; sys.path.insert(0, \\\""+path+"\\\"); import config, json, base64; config.init(); " +
-            "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import gdbfrontend\"; read;'"
+            "config.setJSON(base64.b64decode(\\\""+base64.b64encode(json.dumps(arg_config).encode()).decode()+"\\\").decode()); import gdbfrontend\"" +
+            " " + gdb_args +
+            "; read;'"
         )
     else:
         os.system(
@@ -393,9 +394,10 @@ try:
             " -f \"" + path + "/tmux.conf\" send-keys -t " + terminal_id +
             " \"" +
             gdb_executable +
-            " " + gdb_args +
             " -ex \\\"python import sys, os; sys.path.insert(0, '"+path+"'); import config, json, base64; config.init(); " +
-            "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import gdbfrontend\\\"; read;"
+            "config.setJSON(base64.b64decode('"+base64.b64encode(json.dumps(arg_config).encode()).decode()+"').decode()); import gdbfrontend\\\"" +
+            " " + gdb_args +
+            "; read;" +
             "\" "
         )
         os.system(
